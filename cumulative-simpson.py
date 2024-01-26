@@ -5,20 +5,20 @@ def calc_cumulative_simpson(x_range, f_vals):
     n     = len(x_range)
     start = 0
     stop  = n-2 if n%2==1 else n-3
-    de    = (x_range[-1]-x_range[0])/(n-1)
+    dx    = (x_range[-1]-x_range[0])/(n-1)
     outs  = np.zeros(n)
     outs[start:stop:2]     += f_vals[start:stop:2]
     outs[start+1:stop+1:2] += 4*f_vals[start+1:stop+1:2]
     outs[start+2:stop+2:2] += f_vals[start+2:stop+2:2]
-    outs *= de/3.
+    outs *= dx/3.
     # https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_rule_for_irregularly_spaced_data
     if n%2==0:
         alpha = 5/12
         beta  = 2/3
         eta   = 1/12
-        outs[-1] += alpha*f_vals[-1]*de
-        outs[-2] += beta*f_vals[-2]*de
-        outs[-3] += -eta*f_vals[-3]*de
+        outs[-1] += alpha*f_vals[-1]*dx
+        outs[-2] += beta*f_vals[-2]*dx
+        outs[-3] += -eta*f_vals[-3]*dx
     return np.cumsum(outs)
 
 if __name__ == "__main__":
